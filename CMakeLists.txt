@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15.0)
-project(453-skeleton)
+project(src)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/modules/" ${CMAKE_MODULE_PATH})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
