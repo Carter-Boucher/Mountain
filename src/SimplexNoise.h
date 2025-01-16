@@ -120,4 +120,10 @@ private:
 	static int fastFloor(double x) {
 		return (x >= 0) ? (int)x : (int)x - 1;
 	}
+
+	static constexpr std::array<double, 36> grad3 = {
+		 1,  1,  0,  -1,  1,  0,   1, -1,  0,  -1, -1,  0,
+		 1,  0,  1,  -1,  0,  1,   1,  0, -1,  -1,  0, -1,
+		 0,  1,  1,   0, -1,  1,   0,  1, -1,   0, -1, -1
+	};
 };

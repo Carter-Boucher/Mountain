@@ -305,3 +305,4 @@ __pycache__/
 
 #ignore thirdparty folder
 thirdparty
+thirdparty/*

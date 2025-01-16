@@ -13,9 +13,6 @@
 #include <algorithm> 
 #include <chrono>
 #include <thread>
-
-
-#define M_PI 3.14159
 #include <random>
 
 float mountain::ridge(float h, float offset)

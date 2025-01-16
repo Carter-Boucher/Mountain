@@ -1,4 +1,4 @@
-## Render mountain terrain using a 2D Perlin Noise function
+## Render mountain terrain using Perlin Noise
 
 This project implements a 2D Perlin Noise function to render mountain terrain.
 The Perlin Noise function is a widely used algorithm to generate natural-looking textures.

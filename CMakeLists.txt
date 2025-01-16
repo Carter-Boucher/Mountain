@@ -94,17 +94,17 @@ add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLAD=ON)
 
 # Compile our main application
 file(GLOB SOURCES
-    453-skeleton/*
+    src/*
     #thirdparty/glew-2.1.0/src/glew.c
 	thirdparty/imgui-1.78/imgui/*.cpp
 )
 set(INCLUDES ${INCLUDES} src)
 
-set(APP_NAME "453-skeleton-program")
+set(APP_NAME "Mountain-program")
 
 
 # Copy all the shaders and tell the build system to re-run CMAKE if one of them changes
-file(GLOB files 453-skeleton/shaders/*)
+file(GLOB files src/shaders/*)
 foreach(file ${files})
 	get_filename_component(name ${file} NAME)
 	configure_file(${file} shaders/${name})
@@ -116,7 +116,7 @@ foreach(file ${files_t})
 	configure_file(${file} textures/${name} COPYONLY)
 endforeach()
 
-add_executable(${APP_NAME} ${SOURCES} "453-skeleton/mountain.h" "453-skeleton/mountain.cpp" "453-skeleton/config.h" "453-skeleton/Vertex.h" "453-skeleton/SimplexNoise.h" "453-skeleton/config.cpp")
+add_executable(${APP_NAME} ${SOURCES} "src/mountain.h" "src/mountain.cpp" "src/config.h" "src/Vertex.h" "src/SimplexNoise.h" "src/config.cpp")
 target_include_directories(${APP_NAME} PRIVATE ${INCLUDES})
 target_link_libraries(${APP_NAME} ${LIBRARIES})
 target_compile_definitions(${APP_NAME} PRIVATE ${DEFINITIONS})
