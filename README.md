@@ -2,7 +2,7 @@
 
 This project implements a 2D Perlin Noise and ridged multifractal function to render mountain terrain.
 
-Graphics are done in c++ and openGL.
+Graphics are done in c++ and openGL. Phong shading model used.
 
 Code outputs:
 ### Triangle Mesh Render
