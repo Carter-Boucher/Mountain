@@ -110,9 +110,7 @@ public:
 	}
 
 private:
-	// The permutation vector
 	std::vector<uint8_t> p;
-	// Expanded permutation arrays
 	std::vector<uint8_t> perm;
 	std::vector<uint8_t> permMod12;
 

@@ -22,10 +22,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "UnitCube.h"
 #include "mountain.h"
 
-// Include our config header
 #include "config.h"
 
 // EXAMPLE CALLBACKS
@@ -116,7 +114,7 @@ int main() {
 
 	// MOUNTAIN
 	// The constructor presumably loads geometry or sets up VAOs, etc.
-	mountain mountain1("mountain1", "textures/th.jpg", GL_LINEAR);
+	mountain mountain1("mountain1", "textures/rock.jpg", GL_LINEAR);
 	config currentConfig = loadConfig("config.txt");
 	mountain1.updateConfig(currentConfig);
 
@@ -140,12 +138,10 @@ int main() {
 				currentConfig = loadConfig("config.txt");
 				lastWriteTime = newWriteTime;
 
-				// If the mountain geometry depends on config:
 				 mountain1.updateConfig(currentConfig);
 			}
 		}
 		catch (std::filesystem::filesystem_error& e) {
-			// If the file was removed or there's a permissions issue, handle it gracefully
 			std::cerr << "Error checking file time: " << e.what() << std::endl;
 		}
 
@@ -154,13 +150,10 @@ int main() {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//glm::vec3 sunPos = glm::vec3(10.0f, 10.0f, 3.0f);
 		glUniform3fv(glGetUniformLocation(shader, "lightPos"), 1, glm::value_ptr(glm::vec3(10.0f, 10.0f, 3.0f)));
 		glUniform3fv(glGetUniformLocation(shader, "viewPos"), 1, glm::value_ptr(a4->camera.getPos()));
 		glUniform3fv(glGetUniformLocation(shader, "lightColor"), 1, glm::value_ptr(glm::vec3(1.0f, 1.0f, 1.0f)));
-		//rotate sun around point 0,0,0
+
 		shader.use();
 		a4->viewPipeline(shader);
 
@@ -171,7 +164,6 @@ int main() {
 		if (currentConfig.type == 1) glDrawArrays(GL_TRIANGLES, 0, mountain1.m_size);
 		mountain1.texture.unbind();
 		
-		//glDrawArrays(GL_TRIANGLES, 0, mountain1.m_size);
 		mountain1.texture.unbind();
 
 		glDisable(GL_FRAMEBUFFER_SRGB); // disable sRGB for anything else
