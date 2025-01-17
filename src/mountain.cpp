@@ -126,7 +126,6 @@ void mountain::elevate()
 	verts.resize((subdivisions + 1) * (subdivisions + 1));
 	normals.resize((subdivisions + 1) * (subdivisions + 1));
 
-	// Optional: prepare a per-vertex texcoord array
 	std::vector<glm::vec2> texcoords;
 	texcoords.resize((subdivisions + 1) * (subdivisions + 1));
 
@@ -203,12 +202,15 @@ void mountain::elevate()
 	computeNormals(indices, normals, verts);
 	std::vector<glm::vec3> finalVerts;
 	std::vector<glm::vec3> finalNormals;
+	std::vector<glm::vec2> finalTexcoords;
 	finalVerts.resize(indices.size());
 	finalNormals.resize(indices.size());
+	finalTexcoords.resize(indices.size());
 
 	for (int i = 0; i < indices.size(); i++) {
 		finalVerts[i] = verts[indices[i]];
 		finalNormals[i] = normals[indices[i]];
+		finalTexcoords[i] = texcoords[indices[i]];
 	}
 
 	//third loop time
@@ -223,23 +225,12 @@ void mountain::elevate()
 	m_gpu_geom.setVerts(m_cpu_geom.verts);
 	m_gpu_geom.setNormals(m_cpu_geom.normals);
 
-	//tex coords
-	std::vector<glm::vec2> texCoords;
-	texCoords.resize((subdivisions + 1) * (subdivisions + 1));
-	for (int row = 0; row <= subdivisions; row++) {
-		for (int col = 0; col <= subdivisions; col++) {
-			int index = row * (subdivisions + 1) + col;
-			texCoords[index].x = col / (float)subdivisions;
-			texCoords[index].y = row / (float)subdivisions;
-		}
-	}
-
 	//time after fourth loop
 	auto fourthLoop = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsedFourthLoop = fourthLoop - thirdLoop;
 	std::cout << "Fourth loop time: " << elapsedFourthLoop.count() << " s\n";
 
-	m_gpu_geom.setTexCoords(texCoords);
+	m_gpu_geom.setTexCoords(finalTexcoords);
 
 	//size
 	m_size = m_cpu_geom.verts.size();

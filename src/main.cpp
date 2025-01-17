@@ -84,12 +84,9 @@ public:
 		glm::mat4 P = glm::perspective(glm::radians(45.0f), aspect, 0.01f, 1000.f);
 
 		// Send to shader
-		GLint uniMat = glGetUniformLocation(sp, "M");
-		glUniformMatrix4fv(uniMat, 1, GL_FALSE, glm::value_ptr(M));
-		uniMat = glGetUniformLocation(sp, "V");
-		glUniformMatrix4fv(uniMat, 1, GL_FALSE, glm::value_ptr(V));
-		uniMat = glGetUniformLocation(sp, "P");
-		glUniformMatrix4fv(uniMat, 1, GL_FALSE, glm::value_ptr(P));
+		glUniformMatrix4fv(glGetUniformLocation(sp, "M"), 1, GL_FALSE, glm::value_ptr(M));
+		glUniformMatrix4fv(glGetUniformLocation(sp, "V"), 1, GL_FALSE, glm::value_ptr(V));
+		glUniformMatrix4fv(glGetUniformLocation(sp, "P"), 1, GL_FALSE, glm::value_ptr(P));
 	}
 
 	Camera camera;
@@ -119,7 +116,7 @@ int main() {
 
 	// MOUNTAIN
 	// The constructor presumably loads geometry or sets up VAOs, etc.
-	mountain mountain1("mountain1", "textures/rock.png", GL_LINEAR);
+	mountain mountain1("mountain1", "textures/th.jpg", GL_LINEAR);
 	config currentConfig = loadConfig("config.txt");
 	mountain1.updateConfig(currentConfig);
 
@@ -157,22 +154,16 @@ int main() {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL /* or GL_LINE */);
-		//wireframe
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glm::vec3 sunPos = glm::vec3(10.0f, 10.0f, 3.0f);
+		glUniform3fv(glGetUniformLocation(shader, "lightPos"), 1, glm::value_ptr(glm::vec3(10.0f, 10.0f, 3.0f)));
+		glUniform3fv(glGetUniformLocation(shader, "viewPos"), 1, glm::value_ptr(a4->camera.getPos()));
+		glUniform3fv(glGetUniformLocation(shader, "lightColor"), 1, glm::value_ptr(glm::vec3(1.0f, 1.0f, 1.0f)));
+		//rotate sun around point 0,0,0
 		shader.use();
 		a4->viewPipeline(shader);
 
-		// Draw mountain
-		//for (int i = 0; i < mountains.size(); i++) {
-		//	mountains[i].m_gpu_geom.bind();
-		//	mountains[i].texture.bind();
-		//	glPointSize(currentConfig.dotSize);
-		//	if (currentConfig.type == 0) glDrawArrays(GL_POINTS, 0, mountains[i].m_size);
-		//	if (currentConfig.type == 1) glDrawArrays(GL_TRIANGLES, 0, mountains[i].m_size);
-		//	mountains[i].texture.unbind();
-		//}
 		mountain1.m_gpu_geom.bind();
 		mountain1.texture.bind();
 		glPointSize(currentConfig.dotSize);
